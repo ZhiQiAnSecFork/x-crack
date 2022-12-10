@@ -27,7 +27,7 @@ jobs:
           dest: ./build
           prefix: xcrack
           pkg: .
-          targets: windows/amd64,windows/386,linux/386,linux/amd64,darwin/amd64,darwin/arm64
+          targets: windows/amd64,windows/386,linux/amd64,darwin/amd64,darwin/arm64
           v: true
           x: false
           race: false
@@ -40,23 +40,19 @@ jobs:
           echo "RELEASE_WIN64=xcrack-${{ github.event.release.tag_name}}windows-64bit" >> $GITHUB_ENV
           echo "RELEASE_OSX_AMD64=xcrack-${{ github.event.release.tag_name}}osx-AMD-64bit" >> $GITHUB_ENV
           echo "RELEASE_OSX_ARM64=xcrack-${{ github.event.release.tag_name}}osx-ARM-64bit" >> $GITHUB_ENV
-          echo "RELEASE_Linux386=xcrack-${{ github.event.release.tag_name}}linux-x86" >> $GITHUB_ENV
-          echo "RELEASE_LinuxAMD64=xcrack-${{ github.event.release.tag_name}}linux-amd64" >> $GITHUB_ENV
+          echo "RELEASE_Linux_AMD64=xcrack-${{ github.event.release.tag_name}}linux-amd64" >> $GITHUB_ENV
       - name: Build zip
         run: |
           mv build/xcrack-windows*386.exe "$RELEASE_WIN32".exe
           mv build/xcrack-windows*amd64.exe "$RELEASE_WIN64".exe
           mv build/xcrack-darwin-*amd64 "$RELEASE_OSX_AMD64"
           mv build/xcrack-darwin-*arm64 "$RELEASE_OSX_ARM64"
-          mv build/xcrack-linux-*386 "$RELEASE_Linux386"
-          mv build/xcrack-linux-*amd64 "$RELEASE_LinuxAMD64"
+          mv build/xcrack-linux-*amd64 "$RELEASE_Linux_AMD64"
           zip "$RELEASE_WIN32".zip "$RELEASE_WIN32".exe
           zip "$RELEASE_WIN64".zip "$RELEASE_WIN64".exe
           zip "$RELEASE_OSX_AMD64".zip "$RELEASE_OSX_AMD64"
           zip "$RELEASE_OSX_ARM64".zip "$RELEASE_OSX_ARM64"
-          zip "$RELEASE_LinuxAMD64".zip "$RELEASE_LinuxAMD64"
-          zip "$RELEASE_LinuxARM64".zip "$RELEASE_Linux386"
-
+          zip "$RELEASE_Linux_AMD64".zip "$RELEASE_Linux_AMD64"
 
       - name: Create Release
         id: create_release
@@ -111,16 +107,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./${{ env.RELEASE_LinuxAMD64 }}.zip
-          asset_name: ${{ env.RELEASE_LinuxAMD64 }}.zip
-          asset_content_type: application/zip
-
-      - name: Upload Release - Linux 386
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./${{ env.RELEASE_Linux386 }}.zip
-          asset_name: ${{ env.RELEASE_Linux386 }}.zip
+          asset_path: ./${{ env.RELEASE_Linux_AMD64 }}.zip
+          asset_name: ${{ env.RELEASE_Linux_AMD64 }}.zip
           asset_content_type: application/zip
