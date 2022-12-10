@@ -29,20 +29,27 @@ import (
 
 	"gopkg.in/cheggaaa/pb.v2"
 
+	"strings"
 	"sync"
 	"time"
-	"strings"
 )
 
 var (
-	IpList     = "iplist.txt"
-	ResultFile = "x_crack.txt"
+	IpList     = "/Users/dpdu/GolandProjects/x-crack/iplist.txt"
+	ResultFile = "/Users/dpdu/GolandProjects/x-crack/results.txt"
 
-	UserDict = "user.dic"
-	PassDict = "pass.dic"
+	UserDict = "/Users/dpdu/GolandProjects/x-crack/user.dic"
+	PassDict = "/Users/dpdu/GolandProjects/x-crack/pass.dic"
+
+	USER = "root"
+	PASS = "123456"
+
+	USERNAME = ""
+	PASSWORD = ""
+	IP       = "" // ssh://127.0.0.1
 
 	TimeOut = 3 * time.Second
-	ScanNum = 5000
+	ScanNum = 100
 
 	DebugMode bool
 
@@ -63,10 +70,12 @@ var (
 		445:   "SMB",
 		1433:  "MSSQL",
 		3306:  "MYSQL",
-		5432:  "POSTGRESQL",
+		3389:  "RDP",
+		5432:  "POSTGRES",
 		6379:  "REDIS",
 		9200:  "ELASTICSEARCH",
 		27017: "MONGODB",
+		110:   "POP3",
 	}
 
 	UdpProtocols = map[string]bool{
