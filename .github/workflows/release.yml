@@ -24,7 +24,7 @@ jobs:
         with:
           xgo_version: latest
           go_version: ${{ matrix.go_version }}
-          dest: build
+          dest: ./build
           prefix: xcrack
           pkg: .
           targets: windows/amd64,windows/386,linux/386,linux/amd64,darwin/amd64,darwin/arm64
@@ -52,9 +52,8 @@ jobs:
           mv build/xcrack-linux-*amd64 "$RELEASE_LinuxAMD64"
           zip "$RELEASE_WIN32".zip "$RELEASE_WIN32".exe
           zip "$RELEASE_WIN64".zip "$RELEASE_WIN64".exe
-          zip "$RELEASE_OSX".zip "$RELEASE_OSX"
-          zip "$RELEASE_LinuxARM".zip "$RELEASE_LinuxARM"
-          zip "$RELEASE_Linux386".zip "$RELEASE_Linux386"
+          zip "$RELEASE_OSX_AMD64".zip "$RELEASE_OSX_AMD64"
+          zip "$RELEASE_OSX_ARM64".zip "$RELEASE_OSX_ARM64"
           zip "$RELEASE_LinuxAMD64".zip "$RELEASE_LinuxAMD64"
           zip "$RELEASE_LinuxARM64".zip "$RELEASE_Linux386"
 
