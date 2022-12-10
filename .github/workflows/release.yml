@@ -26,7 +26,7 @@ jobs:
           go_version: ${{ matrix.go_version }}
           dest: build
           prefix: xcrack
-          pkg: cmd/cmd
+          pkg: .
           targets: windows/amd64,windows/386,linux/386,linux/amd64,darwin/amd64,darwin/arm64
           v: true
           x: false
