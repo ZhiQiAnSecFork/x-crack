@@ -25,12 +25,11 @@ THE SOFTWARE.
 package plugins
 
 import (
-	_ "github.com/netxfly/mysql"
-
+	_ "github.com/go-sql-driver/mysql"
 	"x-crack/models"
 
-	"fmt"
 	"database/sql"
+	"fmt"
 )
 
 func ScanMysql(service models.Service) (err error, result models.ScanResult) {
@@ -41,8 +40,12 @@ func ScanMysql(service models.Service) (err error, result models.ScanResult) {
 	db, err := sql.Open("mysql", dataSourceName)
 
 	if err == nil {
+		defer func(db *sql.DB) {
+			err := db.Close()
+			if err != nil {
 
-		defer db.Close()
+			}
+		}(db)
 		err = db.Ping()
 		if err == nil {
 			result.Result = true
